@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>House prices prediciton based on the number of bedrooms</title>
+		<script src="http://code.jquery.com/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/flot/0.8.3/jquery.flot.js"></script>
+		<script src="js/regression.min.js"></script>
+
+		<script>
+
+		$(function(){
+
+			// Data
+			var data = [
+
+				[0, 300000],
+				[1, 650000],
+				[2, 800000],
+				[2, 830000],
+				[3, 1200000],
+				[3, 1100000],
+				[4, 2200000],
+				[4, 2250000],
+
+			];
+
+			// do the regression (polynomial to the specific degree)
+			var myRegression = regression('polynomial', data, 4);
+
+			// Plot the result
+			$.plot($('.graph'), [
+				{data: myRegression.points, label: 'Polynomial'},
+				{data: data, lines: { show: false }, points: { show: true }},
+			]);
+
+			// print the equation out
+			$('h2').text(myRegression.string);
+
+		});
+
+		</script>
+
+		<style>
+			html, body{
+				margin: 0;
+				padding: 0;
+				font-family: "Helvetica", sans-serif;
+				text-align: center;
+			}
+			.container{
+				margin: 0 auto;
+				width: 1170px;
+			}
+			.graph{
+				width: 1170px;
+				height: 500px;
+			}
+		</style>
+
+	</head>
+	<body>
+		<div class="container">
+			<h1>House Price Prediction Based on Bedrooms</h1>
+			<div class="graph"></div>
+			<h2></h2>
+			<div>Reference: <a href="https://github.com/gavinwhyte/regression-js/">https://github.com/gavinwhyte/regression-js/</a></div>
+		</div>
+	</body>
+</html>
